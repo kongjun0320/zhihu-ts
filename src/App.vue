@@ -1,18 +1,55 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="container">
+    <ColumnList :lists="columnLists" />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import { defineComponent } from 'vue'
+import ColumnList, { ColumnListProps } from './components/column-list/index.vue'
+
+const columnLists: ColumnListProps[] = [
+  {
+    _id: 1,
+    title: '标题',
+    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    description: '描述信息'
+  },
+  {
+    _id: 2,
+    title: '标题2',
+    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    description: '描述信息2'
+  },
+  {
+    _id: 3,
+    title: '标题',
+    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    description: '描述信息'
+  },
+  {
+    _id: 4,
+    title: '标题2',
+    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    description: '描述信息2'
+  },
+  {
+    _id: 5,
+    title: '标题2',
+    avatar: '',
+    description: '描述信息2'
+  }
+]
 
 export default defineComponent({
-  name: "App",
-  components: {
-    HelloWorld,
+  name: 'App',
+  setup() {
+    return {
+      columnLists
+    }
   },
-});
+  components: { ColumnList }
+})
 </script>
 
 <style lang="scss">
