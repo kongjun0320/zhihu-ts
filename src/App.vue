@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <GlobalHeader :user="currentUser" />
     <ColumnList :lists="columnLists" />
   </div>
 </template>
@@ -7,30 +8,31 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ColumnList, { ColumnListProps } from './components/column-list/index.vue'
+import GlobalHeader, { UserProps } from './components/global-header/index.vue'
 
 const columnLists: ColumnListProps[] = [
   {
     _id: 1,
     title: '标题',
-    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    avatar: '',
     description: '描述信息'
   },
   {
     _id: 2,
     title: '标题2',
-    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    avatar: '',
     description: '描述信息2'
   },
   {
     _id: 3,
     title: '标题',
-    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    avatar: '',
     description: '描述信息'
   },
   {
     _id: 4,
     title: '标题2',
-    avatar: 'https://images.dog.ceo/breeds/clumber/n02101556_7317.jpg',
+    avatar: '',
     description: '描述信息2'
   },
   {
@@ -40,25 +42,22 @@ const columnLists: ColumnListProps[] = [
     description: '描述信息2'
   }
 ]
+const currentUser: UserProps = {
+  isLogin: true,
+  nickName: 'AiCherish',
+  column: 1
+}
 
 export default defineComponent({
   name: 'App',
   setup() {
     return {
-      columnLists
+      columnLists,
+      currentUser
     }
   },
-  components: { ColumnList }
+  components: { ColumnList, GlobalHeader }
 })
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>
