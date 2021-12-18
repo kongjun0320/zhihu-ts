@@ -14,6 +14,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue')
+  },
+  {
+    path: '/sign_up',
+    name: 'SignUp',
+    component: () => import('@/views/sign-up/index.vue')
+  },
+  {
+    path: '/column/:id',
+    name: 'ColumnDetail',
+    component: () => import('@/views/column-detail/index.vue')
   }
 ]
 

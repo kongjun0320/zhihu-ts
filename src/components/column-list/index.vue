@@ -11,7 +11,7 @@
           <h5 class="card-title">{{ list.title }}</h5>
           <p class="card-text text-left">{{ list.description }}</p>
           <router-link
-            :to="`/column/${list._id}`"
+            :to="{ name: 'ColumnDetail', params: { id: list._id } }"
             class="btn btn-outline-primary"
             >进入专栏</router-link
           >
