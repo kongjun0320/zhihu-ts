@@ -3,25 +3,22 @@
     <form action="">
       <div class="mb-3">
         <label for="form-label">邮箱地址</label>
-        <ValidateInput :rules="emailRules" v-model="emailVal"></ValidateInput>
+        <ValidateInput
+          type="text"
+          :rules="emailRules"
+          v-model="emailVal"
+          placeholder="情输入邮箱地址"
+        ></ValidateInput>
         {{ emailVal }}
       </div>
       <div class="mb-3">
-        <label for="exampleInputEmail" class="form-label">邮箱地址</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail"
-          v-model="emailState.val"
-          @blur="validateEmail"
-        />
-        <div class="form-text" v-if="emailState.error">
-          {{ emailState.message }}
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">密码</label>
-        <input type="password" class="form-control" id="exampleInputEmail1" />
+        <label for="form-label">密码</label>
+        <ValidateInput
+          type="password"
+          :rules="emailRules"
+          v-model="emailVal"
+        ></ValidateInput>
+        {{ emailVal }}
       </div>
     </form>
     <GlobalHeader :user="currentUser" />
