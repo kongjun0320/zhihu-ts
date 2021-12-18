@@ -1,26 +1,29 @@
 <template>
   <div class="container">
-    <form action="">
+    <ValiDateForm @form-submit="onFormSubmit">
       <div class="mb-3">
         <label for="form-label">邮箱地址</label>
         <ValidateInput
+          ref="inputRef"
           type="text"
           :rules="emailRules"
           v-model="emailVal"
           placeholder="情输入邮箱地址"
         ></ValidateInput>
-        {{ emailVal }}
       </div>
       <div class="mb-3">
         <label for="form-label">密码</label>
         <ValidateInput
           type="password"
           :rules="emailRules"
-          v-model="emailVal"
+          v-model="passwordVal"
+          placeholder="情输入密码"
         ></ValidateInput>
-        {{ emailVal }}
       </div>
-    </form>
+      <template v-slot:submit>
+        <button type="submit" class="btn btn-danger">submit</button>
+      </template>
+    </ValiDateForm>
     <GlobalHeader :user="currentUser" />
     <ColumnList :lists="columnLists" />
   </div>
@@ -31,6 +34,7 @@ import { defineComponent, reactive, ref } from 'vue'
 import ColumnList, { ColumnListProps } from './components/column-list/index.vue'
 import GlobalHeader, { UserProps } from './components/global-header/index.vue'
 import ValidateInput, { RulesProp } from './components/validate-input/index.vue'
+import ValiDateForm from './components/validate-form/index.vue'
 
 const columnLists: ColumnListProps[] = [
   {
@@ -75,7 +79,8 @@ export default defineComponent({
   components: {
     ColumnList,
     GlobalHeader,
-    ValidateInput
+    ValidateInput,
+    ValiDateForm
   },
   setup() {
     const emailState = reactive({
@@ -104,7 +109,13 @@ export default defineComponent({
       }
     }
 
-    const emailVal = ref('aicherish')
+    const emailVal = ref()
+    const passwordVal = ref()
+
+    const inputRef = ref<any>(null)
+    const onFormSubmit = (result: boolean) => {
+      console.log('result >>> ', result)
+    }
 
     return {
       columnLists,
@@ -112,7 +123,10 @@ export default defineComponent({
       emailState,
       emailRules,
       validateEmail,
-      emailVal
+      emailVal,
+      onFormSubmit,
+      inputRef,
+      passwordVal
     }
   }
 })

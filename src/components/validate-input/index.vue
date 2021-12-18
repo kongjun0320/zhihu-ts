@@ -15,7 +15,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, onMounted, PropType, reactive } from 'vue'
+import { emitter } from '../validate-form/index.vue'
 
 interface RuleProp {
   type: 'required' | 'range'
@@ -63,8 +64,14 @@ export default defineComponent({
           return passed
         })
         inputRef.error = !allPassed
+        return allPassed
       }
+      return true
     }
+
+    onMounted(() => {
+      emitter.emit('form-item-created', validateInput)
+    })
 
     return {
       inputRef,
