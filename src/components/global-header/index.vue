@@ -27,14 +27,10 @@
             >
           </DropdownItem>
           <DropdownItem disabled>
-            <router-link
-              ><a href="#" class="dropdown-item">编辑资料</a></router-link
-            >
+            <a href="#" class="dropdown-item">编辑资料</a>
           </DropdownItem>
           <DropdownItem>
-            <router-link
-              ><a href="#" class="dropdown-item">退出登陆</a></router-link
-            >
+            <a href="#" class="dropdown-item">退出登陆</a>
           </DropdownItem>
         </Dropdown>
       </li>

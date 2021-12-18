@@ -13,7 +13,7 @@ import GlobalHeader, { UserProps } from './components/global-header/index.vue'
 import GlobalFooter from './components/global-footer/index.vue'
 
 const currentUser: UserProps = {
-  isLogin: true,
+  isLogin: false,
   nickName: 'AiCherish',
   column: 1
 }
