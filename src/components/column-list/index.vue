@@ -4,7 +4,7 @@
       <div class="card h-100 shadow-sm">
         <div class="card-body text-center">
           <img
-            :src="list.avatar"
+            :src="list.avatar?.url"
             :alt="list.title"
             class="rounded-circle border border-right my-3"
           />
@@ -22,20 +22,14 @@
 </template>
 
 <script lang="ts">
+import { ColumnProps } from '@/store/store-type'
 import { computed, defineComponent, PropType } from 'vue'
-
-export interface ColumnListProps {
-  _id: number
-  title: string
-  avatar?: string
-  description: string
-}
 
 export default defineComponent({
   name: 'ColumnList',
   props: {
     lists: {
-      type: Array as PropType<ColumnListProps[]>,
+      type: Array as PropType<ColumnProps[]>,
       required: true
     }
   },
@@ -43,7 +37,9 @@ export default defineComponent({
     const columnLists = computed(() => {
       return props.lists.map((l) => {
         if (!l.avatar) {
-          l.avatar = require('@/assets/column.jpg')
+          l.avatar = {
+            url: 'require("@/assets/column.jpg")'
+          }
         }
         return l
       })

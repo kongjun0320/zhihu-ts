@@ -1,7 +1,14 @@
-export interface ColumnListProps {
-  _id: number
+export interface ImageProps {
+  _id?: string
+  url?: string
+  createdAt?: string
+  fitUrl?: string
+}
+
+export interface ColumnProps {
+  _id: string
   title: string
-  avatar?: string
+  avatar?: ImageProps
   description: string
 }
 
@@ -12,11 +19,13 @@ export interface UserProps {
 }
 
 export interface PostProps {
-  _id: number
+  _id?: string
   title: string
-  content: string
-  image?: string
   excerpt?: string
-  createdAt: string
-  columnId: number
+  content?: string
+  image?: ImageProps | string
+  createdAt?: string
+  column: string
+  author?: string | UserProps
+  isHTML?: boolean
 }
