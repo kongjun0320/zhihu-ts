@@ -12,49 +12,22 @@
       </div>
     </section>
     <h4 class="font-weight-bold text-center">发现精彩</h4>
-    <ColumnList :lists="columnLists" />
+    <ColumnList :lists="columns" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import ColumnList, { ColumnListProps } from '@/components/column-list/index.vue'
-const columnLists: ColumnListProps[] = [
-  {
-    _id: 1,
-    title: '标题',
-    avatar: '',
-    description: '描述信息'
-  },
-  {
-    _id: 2,
-    title: '标题2',
-    avatar: '',
-    description: '描述信息2'
-  },
-  {
-    _id: 3,
-    title: '标题',
-    avatar: '',
-    description: '描述信息'
-  },
-  {
-    _id: 4,
-    title: '标题2',
-    avatar: '',
-    description: '描述信息2'
-  },
-  {
-    _id: 5,
-    title: '标题2',
-    avatar: '',
-    description: '描述信息2'
-  }
-]
+import { computed, defineComponent } from 'vue'
+import ColumnList from '@/components/column-list/index.vue'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '@/store'
+
 export default defineComponent({
   setup() {
+    const store = useStore<GlobalDataProps>()
+    const columns = computed(() => store.state.columns)
     return {
-      columnLists
+      columns
     }
   },
   components: { ColumnList }

@@ -34,6 +34,8 @@
 import { defineComponent, ref } from 'vue'
 import ValidateForm from '@/components/validate-form/index.vue'
 import ValidateInput, { RulesProp } from '@/components/validate-input/index.vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   setup() {
@@ -44,17 +46,19 @@ export default defineComponent({
       }
     ]
     const passwordRules: RulesProp = [
-      { type: 'required', message: '密码不能为空' },
-      {
-        type: 'range',
-        message: '输入长度不够'
-      }
+      { type: 'required', message: '密码不能为空' }
     ]
     const emailVal = ref('')
     const passwordVal = ref('')
 
+    const router = useRouter()
+    const store = useStore()
+
     const onFormSubmit = (result: boolean) => {
-      console.log('result >>> ', result)
+      if (result) {
+        store.commit('login')
+        router.push('/')
+      }
     }
     return {
       emailVal,
