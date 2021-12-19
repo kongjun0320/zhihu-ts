@@ -20,3 +20,17 @@ export const getPosts = (data: any) =>
     method: 'get',
     params: {}
   })
+
+export const login = (data: any) =>
+  http({
+    url: `/user/login`,
+    method: 'post',
+    data
+  })
+
+export const registry = (data: any) =>
+  http({
+    url: `/users`,
+    method: 'post',
+    data
+  })

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { getColumn, getColumns, getPosts } from '@/api'
+import { getColumn, getColumns, getPosts, login } from '@/api'
 import { ColumnProps, PostProps, UserProps } from './store-type'
 
 export interface GlobalDataProps {
@@ -7,6 +7,7 @@ export interface GlobalDataProps {
   posts: PostProps[]
   user: UserProps
   loading: boolean
+  token: string
 }
 
 const store = createStore<GlobalDataProps>({
@@ -14,7 +15,8 @@ const store = createStore<GlobalDataProps>({
     user: { isLogin: false },
     columns: [],
     posts: [],
-    loading: false
+    loading: false,
+    token: ''
   },
   getters: {
     getColumnById: (state) => (id: string) => {
@@ -25,9 +27,9 @@ const store = createStore<GlobalDataProps>({
     }
   },
   mutations: {
-    login(state) {
-      state.user = { ...state.user, isLogin: true, nickName: 'AiCherish' }
-    },
+    // login(state) {
+    //   state.user = { ...state.user, isLogin: true, nickName: 'AiCherish' }
+    // },
     fetchColumns(state, rawData) {
       state.columns = rawData.list
     },
@@ -39,6 +41,9 @@ const store = createStore<GlobalDataProps>({
     },
     setLoading(state, status) {
       state.loading = status
+    },
+    login(state) {
+      state.token = ''
     }
   },
   actions: {
@@ -53,6 +58,11 @@ const store = createStore<GlobalDataProps>({
     async fetchPosts({ commit }, cId) {
       const res = await getPosts({ cId })
       commit('fetchPosts', res.data)
+    },
+    async login({ commit }, payload) {
+      const res = await login(payload)
+      console.log('res >>> ', res)
+      // commit('login', '')
     }
   }
 })

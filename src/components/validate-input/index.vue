@@ -29,8 +29,9 @@ import { defineComponent, onMounted, PropType, reactive } from 'vue'
 import { emitter } from '../validate-form/index.vue'
 
 interface RuleProp {
-  type: 'required' | 'range'
+  type: 'required' | 'range' | 'custom'
   message: string
+  validator?: () => boolean
 }
 
 export type RulesProp = RuleProp[]
@@ -72,6 +73,9 @@ export default defineComponent({
               break
             case 'range':
               passed = inputRef.val.length > 7
+              break
+            case 'custom':
+              passed = rule.validator ? rule.validator() : true
               break
             default:
               break
