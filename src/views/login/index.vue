@@ -48,15 +48,15 @@ export default defineComponent({
     const passwordRules: RulesProp = [
       { type: 'required', message: '密码不能为空' }
     ]
-    const emailVal = ref('')
-    const passwordVal = ref('')
+    const emailVal = ref('aicherish@3020.com')
+    const passwordVal = ref('1234567')
 
     const router = useRouter()
     const store = useStore()
 
     const onFormSubmit = (result: boolean) => {
       if (result) {
-        store.dispatch('login', {
+        store.dispatch('loginAndFetch', {
           email: emailVal.value,
           password: passwordVal.value
         })

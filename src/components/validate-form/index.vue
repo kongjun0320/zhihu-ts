@@ -11,20 +11,15 @@
 
 <script lang="ts">
 import { defineComponent, onUnmounted } from 'vue'
-import mitt from 'mitt'
-type ValidateFunc = () => boolean
-type Events = {
-  'form-item-created': ValidateFunc
-}
-export const emitter = mitt<Events>()
+import { emitter, ValidateFunc } from './defineTypes'
 
 export default defineComponent({
   emits: ['form-submit'],
   setup(props, { emit }) {
     let funcArr: ValidateFunc[] = []
     const submitForm = () => {
-      const reuslt = funcArr.map((func) => func()).every((r) => r)
-      emit('form-submit', reuslt)
+      const result = funcArr.map((func) => func()).every((r) => r)
+      emit('form-submit', result)
     }
     const callback = (func: ValidateFunc) => {
       funcArr.push(func)

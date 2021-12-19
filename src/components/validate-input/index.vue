@@ -26,13 +26,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, PropType, reactive } from 'vue'
-import { emitter } from '../validate-form/index.vue'
-
-interface RuleProp {
-  type: 'required' | 'range' | 'custom'
-  message: string
-  validator?: () => boolean
-}
+import { emitter } from '../validate-form/defineTypes'
+import { RuleProp } from './defineTypes'
 
 export type RulesProp = RuleProp[]
 export type TagType = 'input' | 'textarea'

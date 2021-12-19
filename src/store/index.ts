@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
-import { getColumn, getColumns, getPosts, login } from '@/api'
+import { getColumn, getColumns, getCurrentUser, getPosts, login } from '@/api'
 import { ColumnProps, PostProps, UserProps } from './store-type'
+import http from '@/utils/request'
 
 export interface GlobalDataProps {
   columns: ColumnProps[]
@@ -27,9 +28,6 @@ const store = createStore<GlobalDataProps>({
     }
   },
   mutations: {
-    // login(state) {
-    //   state.user = { ...state.user, isLogin: true, nickName: 'AiCherish' }
-    // },
     fetchColumns(state, rawData) {
       state.columns = rawData.list
     },
@@ -42,8 +40,14 @@ const store = createStore<GlobalDataProps>({
     setLoading(state, status) {
       state.loading = status
     },
-    login(state) {
-      state.token = ''
+    login(state, rawData) {
+      const { token } = rawData
+      state.token = token
+      localStorage.setItem('token', token)
+      http.defaults.headers.common.Authorization = `Bearer ${token}`
+    },
+    fetchCurrentUser(state, rawData) {
+      state.user = { isLogin: true, ...rawData }
     }
   },
   actions: {
@@ -61,8 +65,16 @@ const store = createStore<GlobalDataProps>({
     },
     async login({ commit }, payload) {
       const res = await login(payload)
-      console.log('res >>> ', res)
-      // commit('login', '')
+      commit('login', res.data)
+    },
+    async fetchCurrentUser({ commit }) {
+      const res = await getCurrentUser({})
+      commit('fetchCurrentUser', res.data)
+    },
+    loginAndFetch({ dispatch }, loginData) {
+      return dispatch('login', loginData).then(() => {
+        return dispatch('fetchCurrentUser')
+      })
     }
   }
 })
