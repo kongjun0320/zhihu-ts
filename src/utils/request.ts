@@ -24,7 +24,7 @@ http.interceptors.request.use(
   },
   (error) => {
     store.commit('setLoading', false)
-    console.log('error >>> ', error)
+    return Promise.reject(error)
   }
 )
 
@@ -34,8 +34,13 @@ http.interceptors.response.use(
     return res.data
   },
   (error) => {
+    const { message } = error.response.data
     store.commit('setLoading', false)
-    console.log('error >>> ', error)
+    store.commit('setError', {
+      status: true,
+      message
+    })
+    return Promise.reject(error)
   }
 )
 

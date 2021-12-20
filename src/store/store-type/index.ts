@@ -29,3 +29,7 @@ export interface PostProps {
   author?: string | UserProps
   isHTML?: boolean
 }
+export interface GlobalErrorProps {
+  status: boolean
+  message?: string
+}

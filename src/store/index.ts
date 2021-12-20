@@ -1,6 +1,11 @@
 import { createStore } from 'vuex'
 import { getColumn, getColumns, getCurrentUser, getPosts, login } from '@/api'
-import { ColumnProps, PostProps, UserProps } from './store-type'
+import {
+  ColumnProps,
+  GlobalErrorProps,
+  PostProps,
+  UserProps
+} from './store-type'
 import http from '@/utils/request'
 
 export interface GlobalDataProps {
@@ -9,6 +14,7 @@ export interface GlobalDataProps {
   user: UserProps
   loading: boolean
   token: string
+  error: GlobalErrorProps
 }
 
 const store = createStore<GlobalDataProps>({
@@ -17,7 +23,10 @@ const store = createStore<GlobalDataProps>({
     columns: [],
     posts: [],
     loading: false,
-    token: ''
+    token: localStorage.getItem('zhihu-token') || '',
+    error: {
+      status: false
+    }
   },
   getters: {
     getColumnById: (state) => (id: string) => {
@@ -43,11 +52,14 @@ const store = createStore<GlobalDataProps>({
     login(state, rawData) {
       const { token } = rawData
       state.token = token
-      localStorage.setItem('token', token)
+      localStorage.setItem('zhihu-token', token)
       http.defaults.headers.common.Authorization = `Bearer ${token}`
     },
     fetchCurrentUser(state, rawData) {
       state.user = { isLogin: true, ...rawData }
+    },
+    setError(state, e: GlobalErrorProps) {
+      state.error = e
     }
   },
   actions: {
