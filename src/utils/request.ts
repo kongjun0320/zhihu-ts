@@ -20,6 +20,10 @@ http.interceptors.request.use(
     }
 
     store.commit('setLoading', true)
+    store.commit('setError', {
+      status: false,
+      message: ''
+    })
     return config
   },
   (error) => {
@@ -34,7 +38,7 @@ http.interceptors.response.use(
     return res.data
   },
   (error) => {
-    const { message } = error.response.data
+    const { error: message } = error.response.data
     store.commit('setLoading', false)
     store.commit('setError', {
       status: true,

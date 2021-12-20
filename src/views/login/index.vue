@@ -36,6 +36,7 @@ import ValidateForm from '@/components/validate-form/index.vue'
 import ValidateInput, { RulesProp } from '@/components/validate-input/index.vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import createMessage from '@/utils/createMessage'
 
 export default defineComponent({
   setup() {
@@ -62,7 +63,10 @@ export default defineComponent({
             password: passwordVal.value
           })
           .then(() => {
-            router.push('/')
+            createMessage('登陆成功，2秒钟跳转到首页', 'success')
+            setTimeout(() => {
+              router.push('/')
+            }, 2000)
           })
           .catch((e) => {
             console.log('e >>> ', e)

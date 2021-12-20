@@ -27,6 +27,14 @@ export const login = (data: any) =>
     method: 'post',
     data
   })
+
+export const logout = (data: any) =>
+  http({
+    url: `/user/login`,
+    method: 'post',
+    data
+  })
+
 export const getCurrentUser = (data: any) =>
   http({
     url: `/user/current`,
