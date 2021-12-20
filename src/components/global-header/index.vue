@@ -57,7 +57,6 @@ export default defineComponent({
     }
   },
   setup() {
-    const handleLogout = () => {}
     return {}
   }
 })

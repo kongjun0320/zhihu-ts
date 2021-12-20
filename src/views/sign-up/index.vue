@@ -53,10 +53,13 @@ import { defineComponent, reactive } from 'vue'
 import ValidateForm from '@/components/validate-form/index.vue'
 import ValidateInput from '../../components/validate-input/index.vue'
 import { registry } from '@/api'
+import createMessage from '@/utils/createMessage'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'SignUp',
   setup() {
+    const router = useRouter()
     const formData = reactive({
       email: '',
       nickName: '',
@@ -88,8 +91,11 @@ export default defineComponent({
           password: formData.password,
           nickName: formData.nickName
         }
-        const res = await registry(payload)
-        console.log('res >>> ', res)
+        await registry(payload)
+        createMessage('注册工程,2s后跳转到登陆页', 'success')
+        setTimeout(() => {
+          router.push('/login')
+        }, 2000)
       }
     }
 
