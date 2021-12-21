@@ -48,3 +48,10 @@ export const registry = (data: any) =>
     method: 'post',
     data
   })
+
+export const upload = (data: any) =>
+  http({
+    url: `/upload`,
+    method: 'post',
+    data
+  })

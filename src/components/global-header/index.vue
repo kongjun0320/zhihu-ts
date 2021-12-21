@@ -30,7 +30,7 @@
             <a href="#" class="dropdown-item">编辑资料</a>
           </DropdownItem>
           <DropdownItem>
-            <a href="#" class="dropdown-item">退出登陆</a>
+            <a href="#" class="dropdown-item" @click="handleLogout">退出登陆</a>
           </DropdownItem>
         </Dropdown>
       </li>
@@ -43,6 +43,7 @@ import { defineComponent, PropType } from 'vue'
 import Dropdown from '@/components/dropdown/index.vue'
 import DropdownItem from '@/components/dropdown/dropdown-item.vue'
 import { UserProps } from '@/store/store-type'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'GlobalHeader',
@@ -57,7 +58,17 @@ export default defineComponent({
     }
   },
   setup() {
-    return {}
+    const store = useStore()
+
+    const handleLogout = () => {
+      store.commit('logout')
+      store.commit('setCurrentUser', {
+        isLogin: false
+      })
+    }
+    return {
+      handleLogout
+    }
   }
 })
 </script>

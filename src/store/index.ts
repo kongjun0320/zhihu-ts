@@ -16,7 +16,6 @@ export interface GlobalDataProps {
   token: string
   error: GlobalErrorProps
 }
-
 const store = createStore<GlobalDataProps>({
   state: {
     user: { isLogin: false },
@@ -55,6 +54,14 @@ const store = createStore<GlobalDataProps>({
       localStorage.setItem('zhihu-token', token)
       http.defaults.headers.common.Authorization = `Bearer ${token}`
     },
+    logout(state) {
+      state.token = ''
+      localStorage.removeItem('zhihu-token')
+      delete http.defaults.headers.common.Authorization
+    },
+    setCurrentUser(state, user) {
+      state.user = user
+    },
     fetchCurrentUser(state, rawData) {
       state.user = { isLogin: true, ...rawData }
     },
@@ -80,8 +87,9 @@ const store = createStore<GlobalDataProps>({
       commit('login', res.data)
     },
     async fetchCurrentUser({ commit }) {
-      const res = await getCurrentUser({})
-      commit('fetchCurrentUser', res.data)
+      const { data } = await getCurrentUser({})
+      commit('fetchCurrentUser', data)
+      return data
     },
     loginAndFetch({ dispatch }, loginData) {
       return dispatch('login', loginData).then(() => {

@@ -1,4 +1,5 @@
 import store from '@/store'
+import http from '@/utils/request'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
@@ -42,12 +43,38 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiredLogin && !store.state.user.isLogin) {
-    next({ name: 'Login' })
-  } else if (to.meta.redirectAlreadyLogin && store.state.user.isLogin) {
-    next({ name: 'Home' })
+  const { user, token } = store.state
+  const { redirectAlreadyLogin, requiredLogin } = to.meta
+
+  if (!user.isLogin) {
+    if (token) {
+      http.defaults.headers.common.Authorization = `Bearer ${token}`
+      store
+        .dispatch('fetchCurrentUser')
+        .then(() => {
+          if (redirectAlreadyLogin) {
+            next('/')
+          } else {
+            next()
+          }
+        })
+        .catch(() => {
+          store.commit('logout')
+          next('/login')
+        })
+    } else {
+      if (requiredLogin) {
+        next('/login ')
+      } else {
+        next()
+      }
+    }
   } else {
-    next()
+    if (redirectAlreadyLogin) {
+      next('/')
+    } else {
+      next()
+    }
   }
 })
 

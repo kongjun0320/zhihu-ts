@@ -8,13 +8,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { useStore } from 'vuex'
 import GlobalHeader from '@/components/global-header/index.vue'
 import GlobalFooter from '@/components/global-footer/index.vue'
 import { GlobalDataProps } from './store'
 import Loader from '@/components/loader/index.vue'
-import http from '@/utils/request'
 import createMessage from './utils/createMessage'
 
 export default defineComponent({
@@ -28,15 +27,7 @@ export default defineComponent({
     const store = useStore<GlobalDataProps>()
     const currentUser = computed(() => store.state.user)
     const isLoading = computed(() => store.state.loading)
-    const token = computed(() => store.state.token)
     const error = computed(() => store.state.error)
-
-    onMounted(() => {
-      if (token.value && !currentUser.value.isLogin) {
-        http.defaults.headers.common.Authorization = `Bearer ${token.value}`
-        store.dispatch('fetchCurrentUser')
-      }
-    })
 
     watch(
       () => error.value.status,
