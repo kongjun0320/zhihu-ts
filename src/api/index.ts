@@ -49,9 +49,9 @@ export const registry = (data: any) =>
     data
   })
 
-export const upload = (data: any) =>
+export const posts = (data: any) =>
   http({
-    url: `/upload`,
+    url: `/posts`,
     method: 'post',
     data
   })

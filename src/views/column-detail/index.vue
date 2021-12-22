@@ -6,7 +6,7 @@
     >
       <div class="col-3 text-center">
         <img
-          :src="column.avatar.url"
+          :src="column?.avatar?.url"
           :alt="column.title"
           class="rounded-circle border w-100"
         />

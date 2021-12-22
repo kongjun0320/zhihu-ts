@@ -15,7 +15,11 @@ export interface ColumnProps {
 export interface UserProps {
   isLogin: boolean
   nickName?: string
-  column?: number
+  _id?: string
+  column?: string
+  email?: string
+  avatar?: ImageProps
+  description?: string
 }
 
 export interface PostProps {
@@ -32,4 +36,9 @@ export interface PostProps {
 export interface GlobalErrorProps {
   status: boolean
   message?: string
+}
+
+export interface ResponseType {
+  code: number
+  msg: string
 }

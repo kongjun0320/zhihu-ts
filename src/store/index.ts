@@ -1,5 +1,12 @@
 import { createStore } from 'vuex'
-import { getColumn, getColumns, getCurrentUser, getPosts, login } from '@/api'
+import {
+  getColumn,
+  getColumns,
+  getCurrentUser,
+  getPosts,
+  login,
+  posts
+} from '@/api'
 import {
   ColumnProps,
   GlobalErrorProps,
@@ -67,6 +74,9 @@ const store = createStore<GlobalDataProps>({
     },
     setError(state, e: GlobalErrorProps) {
       state.error = e
+    },
+    createPost(state, newPost) {
+      state.posts[newPost._id] = newPost
     }
   },
   actions: {
@@ -95,6 +105,10 @@ const store = createStore<GlobalDataProps>({
       return dispatch('login', loginData).then(() => {
         return dispatch('fetchCurrentUser')
       })
+    },
+    async createPost({ commit }, payload) {
+      const { data } = await posts(payload)
+      commit('createPost', data)
     }
   }
 })
